@@ -59,30 +59,24 @@ public class MyLinkedList {
         this.size++;
     }
 
-    public void remove(int index) {
+    public String remove(String key) {
         Node prevNode = this.head;
         Node currNode = this.head.getNextNode();
 
-        if (index < 0 || index > this.size-1) {
-            return;
+        while (currNode != null) {
+            if (currNode.getK().equals(key)) {
+                prevNode.next = currNode.getNextNode();
+                this.size--;
+                return currNode.getV().toString();
+            }
         }
-        if (index == 0) {
-            this.head = this.head.getNextNode();
-        }
-
-        for (int i = 0; i < index-1; i++) {
-            currNode = currNode.getNextNode();
-            prevNode = prevNode.getNextNode();
-        }
-        prevNode.next = currNode.getNextNode();
-
-        this.size--;
+        return null;
     }
 
-    public Boolean contains(String String) {
+    public Boolean contains(String key) {
         Node currNode = this.head;
         while(currNode != null) {
-            if (currNode.getK().equals(String)) {
+            if (currNode.getK().equals(key)) {
                 return true;
             }
             currNode = currNode.getNextNode();
@@ -108,7 +102,7 @@ public class MyLinkedList {
         return this.size;
     }
 
-    public String get(int index) {
+    public String getK(int index) {
         Node currNode = this.head;
         Integer counter = 0;
 
@@ -121,6 +115,19 @@ public class MyLinkedList {
             counter++;
         }
         return currNode.getK();
+    }
+
+    public String getV(String key) {
+        Node currNode = this.head;
+
+        while (currNode != null) {
+            if (currNode.getK().equals(key)) {
+                return currNode.getV().toString();
+            }
+            currNode = currNode.getNextNode();
+        }
+
+        return null;
     }
 
     public MyLinkedList copy() {
@@ -166,7 +173,7 @@ public class MyLinkedList {
         String s = "";
 
         while (currNode != null) {
-            s += currNode.k;
+            s += ("(" + currNode.k + ", " + currNode.v + ")");
             currNode = currNode.getNextNode();
         }
 

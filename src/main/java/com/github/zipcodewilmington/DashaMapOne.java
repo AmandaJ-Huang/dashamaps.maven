@@ -1,8 +1,5 @@
 package com.github.zipcodewilmington;
 
-
-import java.util.Locale;
-
 /**
  * @author xtofer
  * @version 1.0.0
@@ -10,7 +7,7 @@ import java.util.Locale;
  */
 public class DashaMapOne implements HashMapX {
 
-    MyLinkedList[] myList = new MyLinkedList[26];
+    public MyLinkedList[] myList;
 
     private String HashFunctionOne(String input) {
         if (input.length() > 0) {
@@ -21,38 +18,59 @@ public class DashaMapOne implements HashMapX {
 
     public DashaMapOne() {
         char input = 'a';
+        this.myList = new MyLinkedList[26];
 
         for(int i = 0; i < 26; i++) {
+            myList[i] = new MyLinkedList();
             myList[i].add(Character.toString(input), null);
             input++;
         }
-
     }
-
 
     @Override
     public void set(String key, String value) {
+        String hash = HashFunctionOne(key);
+        int index = hash.charAt(0)-97;
 
+        this.myList[index].add(key, Integer.parseInt(value));
     }
 
     @Override
     public String delete(String key) {
+        String hash = HashFunctionOne(key);
+        int index = hash.charAt(0)-97;
+
+        if (this.myList[index].contains(key))  {
+            return this.myList[index].remove(key);
+        }
         return null;
     }
 
     @Override
     public String get(String key) {
-        return null;
+        String hash = HashFunctionOne(key);
+        int index = hash.charAt(0)-97;
+
+        return this.myList[index].getV(key);
     }
 
     @Override
     public boolean isEmpty() {
+        if (size() == 0) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public long size() {
-        return 0;
+        long counter = 0;
+
+        for (int i = 0; i < 26; i++) {
+            counter += this.myList[i].size();
+        }
+
+        return counter - 26;
     }
 
     @Override
