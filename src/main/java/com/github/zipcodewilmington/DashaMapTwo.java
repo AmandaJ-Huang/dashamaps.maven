@@ -6,6 +6,14 @@ package com.github.zipcodewilmington;
  * @date 10/21/19 9:05 AM
  */
 public class DashaMapTwo implements HashMapX {
+
+    private String HashFunctionOne(String input) {
+        if (input.length() > 0) {
+            return "" + input.toLowerCase().charAt(1);
+        }
+        return null;
+    }
+
     @Override
     public void set(String key, String value) {
 
